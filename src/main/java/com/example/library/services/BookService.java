@@ -35,7 +35,6 @@ public class BookService {
 
     // Fungsi untuk menambah data buku
     public Book addBook(BookRequest request) {
-        // Validasi input
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         if (isEmptyOrSpace(request.getTitle()) || isEmptyOrSpace(request.getAuthor())
                 || isEmptyOrSpace(request.getCategory())
@@ -47,15 +46,11 @@ public class BookService {
             return null;
         }
 
-        // Validasi ISBN
         if (!isValidIsbn(request.getIsbn())) {
-            // Jika ISBN tidak valid, Anda dapat mengembalikan null atau nilai lain yang sesuai
             return null;
         }
 
-        // Periksa apakah ISBN sudah ada dalam basis data
         if (isIsbnExists(request.getIsbn())) {
-            // ISBN sudah ada dalam basis data, Anda dapat mengembalikan null atau nilai lain yang sesuai
             return null;
         }
 
@@ -78,7 +73,6 @@ public class BookService {
         if (!book.isPresent()) {
             return false;
         } else {
-            // Validasi input
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             if (isEmptyOrSpace(request.getTitle()) || isEmptyOrSpace(request.getAuthor())
                     || isEmptyOrSpace(request.getCategory())
@@ -87,7 +81,7 @@ public class BookService {
                     || request.getStock() < 0 || Integer.parseInt(request.getYear()) < 0
                     || Integer.parseInt(request.getYear()) > currentYear
                     || !isAlphaNumericWithSpaces(request.getAuthor())) {
-                return false; // Kembalikan false jika ada validasi yang tidak terpenuhi
+                return false;
             }
 
             book.get().setTitle(request.getTitle());
@@ -115,24 +109,19 @@ public class BookService {
         }
     }
 
-    // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi
     private boolean isEmptyOrSpace(String str) {
         return str == null || str.trim().isEmpty();
     }
 
-    // Fungsi untuk validasi ISBN harus terdiri dari 13 digit angka.
     private boolean isValidIsbn(String isbn) {
         return isbn.matches("^\\d{13}$");
     }
 
-    // Fungsi untuk validasi apakah string hanya terdiri dari huruf, angka, dan spasi
     private boolean isAlphaNumericWithSpaces(String str) {
-        // Gunakan ekspresi reguler untuk memeriksa apakah string hanya terdiri dari huruf, angka, dan spasi
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9\\s]*$");
         return pattern.matcher(str).matches();
     }
 
-    // Fungsi untuk memeriksa apakah ISBN sudah ada dalam basis data
     private boolean isIsbnExists(String isbn) {
         List<Book> existingBooks = bookRepository.findByIsbn(isbn);
         return !existingBooks.isEmpty();

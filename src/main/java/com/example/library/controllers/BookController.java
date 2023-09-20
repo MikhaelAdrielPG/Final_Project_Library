@@ -21,11 +21,13 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    // Tampilkan seluruh data buku
     @GetMapping("")
     public ResponseEntity getBooks() {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.bookList());
     }
 
+    // Tampilkan data buku berdasarkan id
     @GetMapping("/{id}")
     public ResponseEntity getBookById(@PathVariable Long id) {
         Book book = bookService.getBookById(id);
@@ -37,6 +39,7 @@ public class BookController {
         }
     }
 
+    // Tambah data buku
     @PostMapping("")
     public ResponseEntity addBook(@RequestBody BookRequest request) {
         Book newBook = bookService.addBook(request);
@@ -47,6 +50,7 @@ public class BookController {
         }
     }
 
+    // Ubah data buku
     @PutMapping("/{id}")
     public ResponseEntity updateBook(@PathVariable long id, @RequestBody BookRequest request) {
         if (bookService.updateBook(id, request)) {
@@ -56,6 +60,7 @@ public class BookController {
         }
     }
 
+    // Hapus data buku
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBook(@PathVariable long id) {
         if (bookService.deleteBook(id)) {

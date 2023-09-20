@@ -21,11 +21,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Tampilkan data user
     @GetMapping("")
     public ResponseEntity getUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.userList());
     }
 
+    // Tampilkan data user berdasarkan id
     @GetMapping("/{id}")
     public ResponseEntity getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
@@ -37,6 +39,7 @@ public class UserController {
         }
     }
 
+    // Tambah data user
     @PostMapping("")
     public ResponseEntity addUser(@RequestBody UserRequest request) {
         User newUser = userService.addUser(request);
@@ -47,6 +50,7 @@ public class UserController {
         }
     }
 
+    // Ubah data user
     @PutMapping("/{id}")
     public ResponseEntity updateUser(@PathVariable long id, @RequestBody UserRequest request) {
         if (userService.updateUser(id, request)) {
@@ -56,6 +60,7 @@ public class UserController {
         }
     }
 
+    // Hapus data user
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable long id) {
         if (userService.deleteUser(id)) {

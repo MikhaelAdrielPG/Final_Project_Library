@@ -39,8 +39,8 @@ public class TransactionService {
     // Fungsi untuk menambahkan data transaksi
     public Boolean addTransaction(TransactionRequest request) throws ParseException {
         if (request.getUserId() == null || request.getBookId() == null
-                || isEmptyOrSpace(request.getBorrowingDate()) || isEmptyOrSpace(request.getDueDate())) {
-            // Jika salah satu input adalah null atau string kosong, Anda dapat mengembalikan false
+                || isEmptyOrSpace(request.getBorrowingDate())
+                || isEmptyOrSpace(request.getDueDate())) {
             return false;
         }
 
@@ -51,7 +51,6 @@ public class TransactionService {
             Date borrowingDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getBorrowingDate());
             Date dueDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getDueDate());
 
-            // Validasi dueDate harus setelah borrowingDate
             if (dueDate.before(borrowingDate)) {
                 return false;
             }
@@ -77,7 +76,6 @@ public class TransactionService {
     // Fungsi untuk menambahkan data return date pada transaksi
     public Boolean bookReturn(Long id, TransactionRequest request) throws ParseException {
         if (isEmptyOrSpace(request.getReturnDate())) {
-            // Jika returnDate adalah null atau string kosong, Anda dapat mengembalikan false
             return false;
         }
 
@@ -127,7 +125,7 @@ public class TransactionService {
     }
 
 
-    public List<TopLateReturnResponse> getTop3MembersMostLateReturnsDTO() {
+    public List<TopLateReturnResponse> getTop3MembersMostLateReturns() {
         List<Object[]> top3MembersData = transactionRepository.findTop3MembersMostLateReturns();
         List<TopLateReturnResponse> top3Members = new ArrayList<>();
 
@@ -141,7 +139,7 @@ public class TransactionService {
         return top3Members;
     }
 
-    public List<AllTransactionResponse> getAllTransactionsDTO() {
+    public List<AllTransactionResponse> getAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
         List<AllTransactionResponse> transactionResponses = new ArrayList<>();
 
@@ -157,7 +155,7 @@ public class TransactionService {
         return transactionResponses;
     }
 
-    public List<AllTransactionResponse> getReturnedTransactionsDTO() {
+    public List<AllTransactionResponse> getReturnedTransactions() {
         List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNull();
         List<AllTransactionResponse> returnedTransactionResponses = new ArrayList<>();
 
@@ -173,7 +171,6 @@ public class TransactionService {
         return returnedTransactionResponses;
     }
 
-    // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi
     private boolean isEmptyOrSpace(String str) {
         return str == null || str.trim().isEmpty();
     }
