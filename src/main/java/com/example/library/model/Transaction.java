@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Transaction {
     private Date  borrowingDate;
     private Date dueDate;
     private Date returnDate;
-    private Double fines;
+    private Double penalty;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -75,12 +76,12 @@ public class Transaction {
         this.returnDate = returnDate;
     }
 
-    public Double getFines() {
-        return fines;
+    public Double getPenalty() {
+        return penalty;
     }
 
-    public void setFines(Double fines) {
-        this.fines = fines;
+    public void setPenalty(Double penalty) {
+        this.penalty = penalty;
     }
 
     public User getUser() {

@@ -1,6 +1,5 @@
 package com.example.library.seeders;
 
-import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

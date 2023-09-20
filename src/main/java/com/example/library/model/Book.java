@@ -43,6 +43,16 @@ public class Book {
     public Book() {
     }
 
+    public Book(String isbn, String title, String category, String publisher, String year, String author, Integer stock) {
+        this.isbn = isbn;
+        this.title = title;
+        this.category = category;
+        this.publisher = publisher;
+        this.year = year;
+        this.author = author;
+        this.stock = stock;
+    }
+
     public Long getId() {
         return id;
     }
