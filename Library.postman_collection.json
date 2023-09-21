@@ -83,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"isbn\": \"12000000\",\r\n    \"title\": \"1 Sekawan\",\r\n    \"category\": \"novel\",\r\n    \"publisher\": \"gramedia\",\r\n    \"year\": \"2018\",\r\n    \"author\": \"Bodi Anwar\",\r\n    \"stock\": 10\r\n}",
+							"raw": "{\r\n    \"isbn\": \"2211133445511\",\r\n    \"title\": \"1 Sekawan\",\r\n    \"category\": \"Novel\",\r\n    \"publisher\": \"Gramedia\",\r\n    \"year\": \"2018\",\r\n    \"author\": \"Bodi Anwar\",\r\n    \"stock\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -152,7 +152,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/books/by-year/2016",
+							"raw": "http://localhost:8080/books/by-year/2018",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -161,7 +161,7 @@
 							"path": [
 								"books",
 								"by-year",
-								"2016"
+								"2018"
 							]
 						}
 					},
@@ -173,7 +173,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/books/by-publisher/Scott",
+							"raw": "http://localhost:8080/books/by-publisher/gramedia",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -182,7 +182,7 @@
 							"path": [
 								"books",
 								"by-publisher",
-								"Scott"
+								"gramedia"
 							]
 						}
 					},
@@ -300,7 +300,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Ucup\", \r\n    \"gender\": \"laki-laki\",\r\n    \"phone\": \"0813213131\",\r\n    \"address\": \"Jalan Maleber Utara 23\", \r\n    \"type\": \"Member\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Ucup\", \r\n    \"gender\": \"Male\",\r\n    \"phone\": \"0813213222131\",\r\n    \"address\": \"Jalan Maleber Utara 23\", \r\n    \"type\": \"Member\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,7 +348,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/by-type/Staff",
+							"raw": "http://localhost:8080/users/by-type/Member",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -357,7 +357,7 @@
 							"path": [
 								"users",
 								"by-type",
-								"Staff"
+								"Member"
 							]
 						}
 					},
@@ -375,7 +375,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"borrowingDate\": \"8/12/2023\",\r\n    \"dueDate\": \"13/12/2023\",\r\n    \"userId\": 2,\r\n    \"bookId\": 4\r\n}",
+							"raw": "{\r\n    \"borrowing_date\": \"8/12/2023\",\r\n    \"due_date\": \"13/12/2023\",\r\n    \"user_id\": 2,\r\n    \"book_id\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -403,7 +403,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"returnDate\": \"15/12/2023\"\r\n}",
+							"raw": "{\r\n    \"return_date\": \"15/12/2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -411,7 +411,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/transactions/return/3",
+							"raw": "http://localhost:8080/transactions/return/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -420,7 +420,7 @@
 							"path": [
 								"transactions",
 								"return",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -432,7 +432,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/transactions/top5-most-borrowed",
+							"raw": "http://localhost:8080/transactions/top5-most-borrowed-books",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -440,7 +440,7 @@
 							"port": "8080",
 							"path": [
 								"transactions",
-								"top5-most-borrowed"
+								"top5-most-borrowed-books"
 							]
 						}
 					},

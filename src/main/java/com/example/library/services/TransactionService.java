@@ -50,11 +50,6 @@ public class TransactionService {
             Date borrowingDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getBorrowingDate());
             Date dueDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getDueDate());
 
-            // Validasi dueDate harus setelah borrowingDate
-            if (dueDate.before(borrowingDate)) {
-                return false;
-            }
-
             Transaction transaction = new Transaction();
             transaction.setBorrowingDate(borrowingDate);
             transaction.setDueDate(dueDate);
@@ -140,7 +135,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getAllTransactionsDTO() {
-        List<Transaction> transactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
+        List<Transaction> transactions = transactionRepository.findAll();
         List<AllTransactionResponse> transactionResponses = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -156,7 +151,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getReturnedTransactionsDTO() {
-        List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
+        List<Transaction> returnedTransactions = transactionRepository.findAll();
         List<AllTransactionResponse> returnedTransactionResponses = new ArrayList<>();
 
         for (Transaction transaction : returnedTransactions) {
