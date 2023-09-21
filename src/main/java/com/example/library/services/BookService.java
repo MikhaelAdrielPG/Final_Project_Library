@@ -46,10 +46,12 @@ public class BookService {
             return null;
         }
 
+        // Periksa apakah ISBN terdiri dari 13 karakter
         if (!isValidIsbn(request.getIsbn())) {
             return null;
         }
 
+        // Periksa apakah ISBN sudah ada dalam database
         if (isIsbnExists(request.getIsbn())) {
             return null;
         }
@@ -109,19 +111,44 @@ public class BookService {
         }
     }
 
+    // Fungsi untuk mendapatkan daftar buku berdasarkan kategori
+    public List<Book> getBooksByCategory(String category) {
+        return bookRepository.findByCategory(category);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan tahun
+    public List<Book> getBooksByYear(String year) {
+        return bookRepository.findByYear(year);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan penerbit (publisher)
+    public List<Book> getBooksByPublisher(String publisher) {
+        return bookRepository.findByPublisher(publisher);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan penulis (author)
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi
     private boolean isEmptyOrSpace(String str) {
         return str == null || str.trim().isEmpty();
     }
 
+    // Fungsi untuk validasi ISBN harus terdiri dari 13 digit angka.
     private boolean isValidIsbn(String isbn) {
         return isbn.matches("^\\d{13}$");
     }
 
+    // Fungsi untuk validasi apakah string hanya terdiri dari huruf, angka, dan spasi
     private boolean isAlphaNumericWithSpaces(String str) {
+        // Gunakan ekspresi reguler untuk memeriksa apakah string hanya terdiri dari huruf, angka, dan spasi
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9\\s]*$");
         return pattern.matcher(str).matches();
     }
 
+    // Fungsi untuk memeriksa apakah ISBN sudah ada dalam basis data
     private boolean isIsbnExists(String isbn) {
         List<Book> existingBooks = bookRepository.findByIsbn(isbn);
         return !existingBooks.isEmpty();

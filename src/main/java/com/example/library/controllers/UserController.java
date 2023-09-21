@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    // Tampilkan data user
     @GetMapping("")
     public ResponseEntity getUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.userList());
     }
 
-    // Tampilkan data user berdasarkan id
     @GetMapping("/{id}")
     public ResponseEntity getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
@@ -39,7 +39,6 @@ public class UserController {
         }
     }
 
-    // Tambah data user
     @PostMapping("")
     public ResponseEntity addUser(@RequestBody UserRequest request) {
         User newUser = userService.addUser(request);
@@ -50,7 +49,6 @@ public class UserController {
         }
     }
 
-    // Ubah data user
     @PutMapping("/{id}")
     public ResponseEntity updateUser(@PathVariable long id, @RequestBody UserRequest request) {
         if (userService.updateUser(id, request)) {
@@ -60,13 +58,23 @@ public class UserController {
         }
     }
 
-    // Hapus data user
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable long id) {
         if (userService.deleteUser(id)) {
             return ResponseEntity.status(HttpStatus.OK).body( "User Deleted Successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete User.");
+        }
+    }
+
+    @GetMapping("/by-type/{type}")
+    public ResponseEntity getUsersByType(@PathVariable String type) {
+        List<User> users = userService.getUsersByType(type);
+
+        if (!users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(users);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Users Found with Type: " + type);
         }
     }
 }

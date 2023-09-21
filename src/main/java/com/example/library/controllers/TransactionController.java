@@ -26,7 +26,24 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    // Tambah data transaksi
+    @GetMapping("/top5-most-borrowed-books")
+    public List<TopBorrowedBookResponse> getTop5MostBorrowedBooks() {
+        List<TopBorrowedBookResponse> top5Books = transactionService.getTop5MostBorrowedBooks();
+        return top5Books;
+    }
+
+    @GetMapping("/top3-most-borrowed")
+    public List<TopMemberBorrowedBookResponse> getTop3MembersMostBorrowedBooksInMonth(@RequestParam("month") int month) {
+        List<TopMemberBorrowedBookResponse> top3MembersData = transactionService.getTop3MembersMostBorrowedBooksInMonth(month);
+        return top3MembersData;
+    }
+
+    @GetMapping("/top3-most-late-returns")
+    public List<TopLateReturnResponse> getTop3MembersMostLateReturnsDTO() {
+        List<TopLateReturnResponse> top3MembersData = transactionService.getTop3MembersMostLateReturnsDTO();
+        return top3MembersData;
+    }
+
     @PostMapping("")
     public ResponseEntity addTransaction(@RequestBody TransactionRequest request) throws ParseException {
         if (transactionService.addTransaction(request)) {
@@ -36,7 +53,6 @@ public class TransactionController {
         }
     }
 
-    // Tambah data transaksi pengembalian buku
     @PostMapping("/return/{id}")
     public ResponseEntity bookReturn(@PathVariable Long id, @RequestBody TransactionRequest request) throws ParseException {
         if (transactionService.bookReturn(id, request)) {
@@ -46,30 +62,15 @@ public class TransactionController {
         }
     }
 
-    // Tampilkan seluruh transaksi
     @GetMapping("/all-transactions")
-    public List<AllTransactionResponse> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    public List<AllTransactionResponse> getAllTransactionsDTO() {
+        List<AllTransactionResponse> transactions = transactionService.getAllTransactionsDTO();
+        return transactions;
     }
 
-    // Tampilkan seluruh transaksi pengembalian buku
     @GetMapping("/returned-transactions")
-    public List<AllTransactionResponse> getReturnedTransactions() {
-        return transactionService.getReturnedTransactions();
-    }
-
-    @GetMapping("/top5-most-borrowed-books")
-    public List<TopBorrowedBookResponse> getTop5MostBorrowedBooks() {
-        return transactionService.getTop5MostBorrowedBooks();
-    }
-
-    @GetMapping("/top3-most-borrowed")
-    public List<TopMemberBorrowedBookResponse> getTop3MembersMostBorrowedBooksInMonth(@RequestParam("month") int month) {
-       return transactionService.getTop3MembersMostBorrowedBooksInMonth(month);
-    }
-
-    @GetMapping("/top3-most-late-returns")
-    public List<TopLateReturnResponse> getTop3MembersMostLateReturns() {
-        return transactionService.getTop3MembersMostLateReturns();
+    public List<AllTransactionResponse> getReturnedTransactionsDTO() {
+        List<AllTransactionResponse> returnedTransactions = transactionService.getReturnedTransactionsDTO();
+        return returnedTransactions;
     }
 }

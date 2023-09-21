@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/books")
 public class BookController {
     @Autowired
     private BookService bookService;
 
-    // Tampilkan seluruh data buku
     @GetMapping("")
     public ResponseEntity getBooks() {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.bookList());
     }
 
-    // Tampilkan data buku berdasarkan id
     @GetMapping("/{id}")
     public ResponseEntity getBookById(@PathVariable Long id) {
         Book book = bookService.getBookById(id);
@@ -39,7 +39,6 @@ public class BookController {
         }
     }
 
-    // Tambah data buku
     @PostMapping("")
     public ResponseEntity addBook(@RequestBody BookRequest request) {
         Book newBook = bookService.addBook(request);
@@ -50,7 +49,6 @@ public class BookController {
         }
     }
 
-    // Ubah data buku
     @PutMapping("/{id}")
     public ResponseEntity updateBook(@PathVariable long id, @RequestBody BookRequest request) {
         if (bookService.updateBook(id, request)) {
@@ -60,13 +58,56 @@ public class BookController {
         }
     }
 
-    // Hapus data buku
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBook(@PathVariable long id) {
         if (bookService.deleteBook(id)) {
             return ResponseEntity.status(HttpStatus.OK).body( "Major Deleted Successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete Major.");
+        }
+    }
+
+    @GetMapping("/by-category/{category}")
+    public ResponseEntity getBooksByCategory(@PathVariable String category) {
+        List<Book> books = bookService.getBooksByCategory(category);
+
+        if (!books.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(books);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Books Found in Category: " + category);
+        }
+    }
+
+    @GetMapping("/by-year/{year}")
+    public ResponseEntity getBooksByYear(@PathVariable String year) {
+        List<Book> books = bookService.getBooksByYear(year);
+
+        if (!books.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(books);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Books Found in Year: " + year);
+        }
+    }
+
+    @GetMapping("/by-publisher/{publisher}")
+    public ResponseEntity getBooksByPublisher(@PathVariable String publisher) {
+        List<Book> books = bookService.getBooksByPublisher(publisher);
+
+        if (!books.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(books);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Books Found for Publisher: " + publisher);
+        }
+    }
+
+    @GetMapping("/by-author/{author}")
+    public ResponseEntity getBooksByAuthor(@PathVariable String author) {
+        List<Book> books = bookService.getBooksByAuthor(author);
+
+        if (!books.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(books);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Books Found for Author: " + author);
         }
     }
 }
