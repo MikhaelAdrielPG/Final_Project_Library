@@ -131,7 +131,7 @@ public class TransactionService {
 
         for (Object[] data : top3MembersData) {
             String memberName = data[0].toString(); // Konversi dari BigInteger ke String
-            Double lateReturnsCountDouble = (Double) data[1]; // Konversi dari Double ke Double
+            Double lateReturnsCountDouble = (Double) data[1]; // Konversi dari BigInteger ke Double
             BigDecimal lateReturnsCount = BigDecimal.valueOf(lateReturnsCountDouble); // Konversi Double ke BigDecimal
             top3Members.add(new TopLateReturnResponse(memberName, lateReturnsCount.intValue())); // Konversi BigDecimal ke Integer
         }
@@ -140,7 +140,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getAllTransactionsDTO() {
-        List<Transaction> transactions = transactionRepository.findAll();
+        List<Transaction> transactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
         List<AllTransactionResponse> transactionResponses = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -156,7 +156,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getReturnedTransactionsDTO() {
-        List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNull();
+        List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
         List<AllTransactionResponse> returnedTransactionResponses = new ArrayList<>();
 
         for (Transaction transaction : returnedTransactions) {
