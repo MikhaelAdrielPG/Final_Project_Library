@@ -1,10 +1,5 @@
 package com.example.library.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction extends BaseClass {
+public class Transaction extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +19,7 @@ public class Transaction extends BaseClass {
     private Date dueDate;
     private Date returnDate;
     private Double penalty;
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -93,5 +89,13 @@ public class Transaction extends BaseClass {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
