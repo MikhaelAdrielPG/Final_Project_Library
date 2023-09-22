@@ -1,8 +1,6 @@
 package com.example.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseClass {
+public class User extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
