@@ -32,10 +32,6 @@ public class TransactionService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Transaction> transactionList() {
-        return transactionRepository.findAll();
-    }
-
     // Fungsi untuk menambahkan data transaksi
     public Boolean addTransaction(TransactionRequest request) throws ParseException {
         if (request.getUserId() == null || request.getBookId() == null
@@ -142,12 +138,17 @@ public class TransactionService {
         List<AllTransactionResponse> transactionResponses = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
-            transactionResponses.add(new AllTransactionResponse(
-                    transaction.getBorrowingDate(),
-                    transaction.getDueDate(),
-                    transaction.getReturnDate(),
-                    transaction.getPenalty()
-            ));
+            Book book = transaction.getBook();
+            User user = transaction.getUser();
+
+            if (book != null && book.getDeletedAt() == null && user != null && user.getDeletedAt() == null) {
+                transactionResponses.add(new AllTransactionResponse(
+                        transaction.getBorrowingDate(),
+                        transaction.getDueDate(),
+                        transaction.getReturnDate(),
+                        transaction.getPenalty()
+                ));
+            }
         }
 
         return transactionResponses;
@@ -158,12 +159,17 @@ public class TransactionService {
         List<AllTransactionResponse> returnedTransactionResponses = new ArrayList<>();
 
         for (Transaction transaction : returnedTransactions) {
-            returnedTransactionResponses.add(new AllTransactionResponse(
-                    transaction.getBorrowingDate(),
-                    transaction.getDueDate(),
-                    transaction.getReturnDate(),
-                    transaction.getPenalty()
-            ));
+            Book book = transaction.getBook();
+            User user = transaction.getUser();
+
+            if (book != null && book.getDeletedAt() == null && user != null && user.getDeletedAt() == null) {
+                returnedTransactionResponses.add(new AllTransactionResponse(
+                        transaction.getBorrowingDate(),
+                        transaction.getDueDate(),
+                        transaction.getReturnDate(),
+                        transaction.getPenalty()
+                ));
+            }
         }
 
         return returnedTransactionResponses;
